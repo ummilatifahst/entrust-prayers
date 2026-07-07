@@ -1,0 +1,32 @@
+-- =====================================================================
+-- SEED DATA — jalankan SETELAH migration & SETELAH create user manual
+-- =====================================================================
+-- Cara pakai (local Supabase):
+--   1. Buat user via Supabase Dashboard Auth atau:
+--        supabase auth signup --email penitip@test.com --password Password123
+--        supabase auth signup --email pendoa@test.com  --password Password123
+--   2. Catat UUID yang muncul, ganti placeholder di bawah.
+--   3. Jalankan: supabase db reset --local
+--      atau: psql -f supabase/seed/seed.sql
+--
+-- Catatan: profile auto-dibuat oleh trigger handle_new_user, jadi seed
+-- ini hanya melengkapi pilgrimages & prayers.
+-- =====================================================================
+
+-- -- CONTOH (uncomment & ganti UUID):
+-- insert into public.pilgrimages
+--   (user_id, type, departure_date, return_date, description, status)
+-- values
+--   ('PENDOA-USER-UUID', 'umroh', current_date + 7,
+--    current_date + 21, 'Umroh Ramadhan, insya Allah berangkat dari Jakarta.',
+--    'active');
+
+-- insert into public.prayers
+--   (sender_id, receiver_id, pilgrimage_id, title, content,
+--    is_private, is_anonymous, status)
+-- values
+--   ('PENITIP-USER-UUID', 'PENDOA-USER-UUID',
+--    (select id from public.pilgrimages where user_id = 'PENDOA-USER-UUID' limit 1),
+--    'Doa untuk orang tua',
+--    'Mohon doakan kesehatan kedua orang tua saya, agar diberi umur panjang & sehat selalu.',
+--    false, false, 'pending');
