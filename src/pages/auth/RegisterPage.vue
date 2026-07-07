@@ -116,23 +116,32 @@ async function submit() {
             </button>
             <button
               type="button"
+              disabled
+              aria-disabled="true"
+              title="Pendaftaran pendoa sementara ditutup"
               :class="[
-                'flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all',
-                form.role === 'pendoa'
-                  ? 'border-emerald-500 bg-emerald-50 shadow-sm'
-                  : 'border-emerald-100 hover:border-emerald-300',
+                'relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all cursor-not-allowed opacity-60 grayscale',
+                'border-emerald-100 bg-emerald-50/40',
               ]"
-              @click="form.role = 'pendoa'"
+              @click.prevent
             >
-              <div :class="['h-10 w-10 rounded-xl flex items-center justify-center', form.role === 'pendoa' ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-700']">
+              <div class="absolute top-2 right-2">
+                <span class="badge-gray text-[10px] uppercase tracking-wide">Ditutup</span>
+              </div>
+              <div class="h-10 w-10 rounded-xl flex items-center justify-center bg-emerald-100 text-emerald-400">
                 <Icon name="kaaba" :size="20" />
               </div>
               <div class="text-center">
-                <p class="font-semibold text-sm text-emerald-900">Pendoa</p>
-                <p class="text-xs text-emerald-600">Sedang Haji/Umroh</p>
+                <p class="font-semibold text-sm text-emerald-700">Pendoa</p>
+                <p class="text-xs text-emerald-500">Sedang Haji/Umroh</p>
+                <p class="text-[10px] text-emerald-600 mt-1 italic">Pendaftaran sementara ditutup</p>
               </div>
             </button>
           </div>
+          <p class="form-hint mt-2 flex items-center gap-1">
+            <Icon name="info" :size="12" />
+            Saat ini pendaftaran sebagai pendoa sedang dinonaktifkan. Hubungi admin jika ingin mendaftar sebagai pendoa.
+          </p>
         </div>
 
         <form @submit.prevent="submit" class="space-y-4">
